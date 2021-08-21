@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * ================================================================================
+ * Count Characters Input - v1 - oc3x
+ * *\* Input Field Counter for Sharing Data with Third Parties */*
+ * Author: Leonardo Leoga (leonardo@agenciaprai.com)
+ * Modifications: 
+ *	> add code view and code js in product form admin - product_form.twig (view .twig)
+ *	> add code view and code js in category form admin - category_form.twig (view .twig)
+ *  > add code in language > product and category
+ * ================================================================================
+-->
+<modification>
+	<name>Count Characters Input</name>
+	<code>count_characters_input</code>
+	<version>1.0</version>
+	<author>LEONARDO LEOGA - AGENCIA PRAI</author>
+	<link>https://www.prai.com/</link>
+	
+	<file path="admin/language/en-gb/catalog/{product,category}.php">
+		<operation error="log">
+			<search><![CDATA[// Text]]></search>
+			<add position="after"><![CDATA[
+			$_['text_google_title']    = 'Titles are indicated between <b>60</b> ~ <b>100</b> characters - Try to keep between this number, using:';
+			$_['text_google_meta_title']     = 'Google will truncate meta title after approximately <b>60</b> characters - Try to keep below';
+			$_['text_google_meta_description']     = 'Google will truncate meta description after approximately <b>160</b> characters - Try to keep below';
+			$_['text_google_meta_keyword']     = 'It is suggested to use between <b>4</b> ~ <b>10</b> meta words - Try to stay within the average, using:';
+			$_['text_google_characters']    = 'characters';
+			$_['text_google_words']    = 'meta words (separated by comma)';
+			
+			$_['text_google_title_alt'] = '<b>Title</b><br>Use the title attribute [title] to clearly identify the product being sold. The headline is one of the most important parts of your ad or listing.';
+			$_['text_google_meta_title_alt'] = '<b>Meta Title</b><br>The Meta Title tag corresponds to the title that will be displayed in search engines. When you do a search and view the results, they are shown as a title, URL and description. Because the Meta Title tag is just that title. So it\'s easy to see that a flashy, eye-catching, enlightening headline will make the searcher feel much more inclined to click on your page.';
+			$_['text_google_meta_description_alt'] = '<b>Meta Description</b><br>As the name says, the Meta Description is the tag that takes care of the description of the page content, presenting in the results page, in a synthetic way , what that page has. Together with the title, the description will make the visitor interested in clicking on the link and finding out more about your product. As this click is free, it is not paid as in Sponsored Links, it is an excellent strategy to attract qualified customers.';
+			$_['text_google_meta_keyword_alt'] = '<b>Meta Keywords</b><br>The Meta Keywords tag matches the keywords on the page, those words that represent the page. This meta tag served as a signal to searchers of what the page was about, but it was gradually abandoned due to abuse - people with no notion put full text as keywords, without any real connection to the content of the page.<br> However, it is known that some search engines still use meta keywords within this set of factors. Therefore, it is worth filling in a few words in this field, without overdoing it. Between 4 and 10 words, directly related to the content of the page, using expressions separated by commas, is ideal.';
+			]]></add>
+			</operation>
+	</file>
+	<file path="admin/language/pt-br/catalog/{product,category}.php">
+		<operation error="log">
+			<search><![CDATA[// Text]]></search>
+			<add position="after"><![CDATA[
+			$_['text_google_title']	= 'Indica-se titulos entre <b>60</b> ~ <b>100</b> caracteres - Tente manter entre esse número, usando: ';
+			$_['text_google_meta_title']	= 'O Google vai truncar o meta título após aproximadamente <b>60</b> caracteres - Tente manter abaixo, usando: ';
+			$_['text_google_meta_description']	= 'O Google vai truncar a meta descrição após aproximadamente <b>160</b> caracteres - Tente manter abaixo, usando: ';
+			$_['text_google_meta_keyword']	= 'Sugere-se o uso entre <b>4</b> ~ <b>10</b> meta palavras - Tente ficar dentro da média, usando: ';
+			$_['text_google_characters']	= 'caracteres';
+			$_['text_google_words']	= 'meta palavras';
+			
+			$_['text_google_title_alt'] = '<b>Título [title]</b><br>Use o atributo de título [title] para identificar claramente o produto que está sendo vendido. O título é uma das partes mais importantes do seu anúncio ou listagem.'; 
+			$_['text_google_meta_title_alt'] = '<b>Meta Title</b><br>A tag Meta Title corresponde ao título que será exibido nos buscadores. Quando você faz uma pesquisa e visualiza os resultados, eles vêm mostrados como título, URL e descrição. Pois a tag Meta Title é justamente aquele título. Por isso, é fácil perceber que um título chamativo, atraente, esclarecedor fará com que a pessoa que está buscando sinta-se muito mais inclinada a clicar em sua página.'; 
+			$_['text_google_meta_description_alt'] = '<b>Meta Description</b><br>Como o nome diz, a Meta Description é a tag que cuida da descrição do conteúdo da página, apresentando na página de resultados, de maneira sintética, o que aquela página tem. Em conjunto com o titulo, a descrição fará com que o visitante tenha interesse em clicar no link e saber mais sobre seu produto. Como esse clique é gratuito, não é pago como nos Links Patrocinados, é uma excelente estratégia para atrair clientes qualificados.'; 
+			$_['text_google_meta_keyword_alt'] = '<b>Meta Keywords</b><br>A tag Meta Keywords corresponde às palavras-chave da página, aquelas palavras que representam a página. Essa meta tag servia como sinalização para os buscadores do que se tratava a página, mas pouco a pouco foi abandonada devido aos abusos – pessoas sem noção colocavam textos completos como palavras-chave, sem qualquer conexão real com o conteúdo da página.<br>Entretanto, sabe-se que alguns buscadores ainda utilizam a meta keywords dentro desse conjunto de fatores. Portanto, vale a pena preencher algumas palavras nesse campo, sem abusar. Entre 4 e 10 palavras, diretamente relacionadas ao conteúdo da página, usando expressões separadas por vírgulas, é o ideal.'; 
+			]]></add>
+			</operation>
+	</file>
+	
+	
+	<file path="admin/view/template/catalog/product_form.twig">
+		<operation error="log">
+			<search><![CDATA[<input type="text" name="product_description[{{ language.language_id }}][name]"]]></search>
+			<add position="after"><![CDATA[
+				<code><i class="fa fa-question-circle-o" data-toggle="tooltip" data-html="true" title="{{ text_google_title_alt }}"></i> {{ text_google_title }} <span class="chars0"></span> {{ text_google_characters }}</code>
+			]]></add>
+		</operation>
+		<operation error="log">
+			<search><![CDATA[<input type="text" name="product_description[{{ language.language_id }}][meta_title]"]]></search>
+			<add position="after"><![CDATA[
+				<code><i class="fa fa-question-circle-o" data-toggle="tooltip" data-html="true" title="{{ text_google_meta_title_alt }}"></i> {{ text_google_meta_title }} <span class="chars1"></span> {{ text_google_characters }}</code>
+			]]></add>
+		</operation>
+		<operation error="log">
+			<search><![CDATA[<textarea name="product_description[{{ language.language_id }}][meta_description]"]]></search>
+			<add position="after"><![CDATA[
+				<code><i class="fa fa-question-circle-o" data-toggle="tooltip" data-html="true" title="{{ text_google_meta_description_alt }}"></i> {{ text_google_meta_description }} <span class="chars2"></span> {{ text_google_characters }}</code>
+			]]></add>
+		</operation>
+		<operation error="log">
+			<search><![CDATA[<textarea name="product_description[{{ language.language_id }}][meta_keyword]"]]></search>
+			<add position="after"><![CDATA[
+			<code><i class="fa fa-question-circle-o" data-toggle="tooltip" data-html="true" title="{{ text_google_meta_keyword_alt }}"></i> {{ text_google_meta_keyword }} <span class="chars3"></span> {{ text_google_words }}</code>
+			]]></add>
+		</operation>
+		<operation error="log">
+			<search><![CDATA[{{ footer }}]]></search>
+			<add position="before"><![CDATA[
+<script type="text/javascript"><!--
+$(window).on('load', function() {
+	checkCharacters()
+});
+
+$(document).on('input', '#input-name2, #input-meta-title2, #input-meta-description2, #input-meta-keyword2', function() {
+	checkCharacters()
+});
+
+function checkCharacters() {
+	var product_name = $('#input-name2').val().length
+	html  = product_name <= 66 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
+	html += product_name + '/66 </i>'
+	
+	$('.chars0').html(html)
+	var meta_title = $('#input-meta-title2').val().length
+	html  = meta_title <= 60 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
+	html += meta_title + '/60 </i>'
+	
+	$('.chars1').html(html)
+	var meta_description = $('#input-meta-description2').val().length
+	html  = meta_description <= 160 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
+	html += meta_description + '/160 </i>'
+	
+	$('.chars2').html(html)
+	var meta_keyword = $('#input-meta-keyword2').val() != '' ? $('#input-meta-keyword2').val().split(',').length : 0
+	html  = meta_keyword <= 10 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
+	html += meta_keyword + '/10 </i>'
+	
+	$('.chars3').html(html)
+}
+--></script>
+			]]></add>
+		</operation>
+	</file>
+	<!--//
+	<file path="admin/view/template/catalog/category_form.twig">
+		<operation error="log">
+			<search><![CDATA[<input type="text" name="category_description[{{ language.language_id }}][name]"]]></search>
+			<add position="after"><![CDATA[<code>{{ text_google_title }} <span class="chars0"></span> {{ text_google_characters }}</code>]]></add>
+		</operation>
+		<operation error="log">
+			<search><![CDATA[<input type="text" name="category_description[{{ language.language_id }}][meta_title]"]]></search>
+			<add position="after"><![CDATA[<code>{{ text_google_meta_title }} <span class="chars1"></span> {{ text_google_characters }}</code>]]></add>
+		</operation>
+		<operation error="log">
+			<search><![CDATA[<textarea name="category_description[{{ language.language_id }}][meta_description]"]]></search>
+			<add position="after"><![CDATA[<code>{{ text_google_meta_description }} <span class="chars2"></span> {{ text_google_characters }}</code>]]></add>
+		</operation>
+		<operation error="log">
+			<search><![CDATA[<textarea name="category_description[{{ language.language_id }}][meta_keyword]"]]></search>
+			<add position="after"><![CDATA[<code>{{ text_google_meta_keyword }} <span class="chars3"></span> {{ text_google_words }}</code>]]></add>
+		</operation>
+		<operation error="log">
+			<search><![CDATA[{{ footer }}]]></search>
+			<add position="before"><![CDATA[
+<script type="text/javascript">
+$(window).on('load', function() {
+	checkCharacters()
+});
+
+$(document).on('input', '#input-name2, #input-meta-title2, #input-meta-description2, #input-meta-keyword2', function() {
+	checkCharacters()
+});
+
+function checkCharacters() {
+	var product_name = $('#input-name2').val().length
+	html  = product_name <= 66 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
+	html += product_name + '/66 </i>'
+	
+	$('.chars0').html(html)
+	var meta_title = $('#input-meta-title2').val().length
+	html  = meta_title <= 60 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
+	html += meta_title + '/60 </i>'
+	
+	$('.chars1').html(html)
+	var meta_description = $('#input-meta-description2').val().length
+	html  = meta_description <= 160 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
+	html += meta_description + '/160 </i>'
+	
+	$('.chars2').html(html)
+	var meta_keyword = $('#input-meta-keyword2').val() != '' ? $('#input-meta-keyword2').val().split(',').length : 0
+	html  = meta_keyword <= 10 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
+	html += meta_keyword + '/10 </i>'
+	
+	$('.chars3').html(html)
+}
+</script>
+			]]></add>
+		</operation>
+	</file>
+//-->
+</modification>
