@@ -13,11 +13,11 @@
 <modification>
 	<name>Count Characters Input</name>
 	<code>count_characters_input</code>
-	<version>1.0</version>
+	<version>1.2</version>
 	<author>LEONARDO LEOGA - AGENCIA PRAI</author>
 	<link>https://www.prai.com/</link>
 	
-	<file path="admin/language/en-gb/catalog/{product,category}.php">
+	<file path="admin/language/en-gb/catalog/product.php">
 		<operation error="log">
 			<search><![CDATA[// Text]]></search>
 			<add position="after"><![CDATA[
@@ -35,7 +35,8 @@
 			]]></add>
 			</operation>
 	</file>
-	<file path="admin/language/pt-br/catalog/{product,category}.php">
+	
+	<file path="admin/language/pt-br/catalog/product.php">
 		<operation error="log">
 			<search><![CDATA[// Text]]></search>
 			<add position="after"><![CDATA[
@@ -59,25 +60,25 @@
 		<operation error="log">
 			<search><![CDATA[<input type="text" name="product_description[{{ language.language_id }}][name]"]]></search>
 			<add position="after"><![CDATA[
-				<code><i class="fa fa-question-circle-o" data-toggle="tooltip" data-html="true" title="{{ text_google_title_alt }}"></i> {{ text_google_title }} <span class="chars0"></span> {{ text_google_characters }}</code>
+				<code><i class="fa fa-question-circle-o" data-toggle="tooltip" data-html="true" title="{{ text_google_title_alt }}"></i> {{ text_google_title }} <span class="chars0-{{ language.language_id }}"></span> {{ text_google_characters }}</code>
 			]]></add>
 		</operation>
 		<operation error="log">
 			<search><![CDATA[<input type="text" name="product_description[{{ language.language_id }}][meta_title]"]]></search>
 			<add position="after"><![CDATA[
-				<code><i class="fa fa-question-circle-o" data-toggle="tooltip" data-html="true" title="{{ text_google_meta_title_alt }}"></i> {{ text_google_meta_title }} <span class="chars1"></span> {{ text_google_characters }}</code>
+				<code><i class="fa fa-question-circle-o" data-toggle="tooltip" data-html="true" title="{{ text_google_meta_title_alt }}"></i> {{ text_google_meta_title }} <span class="chars1-{{ language.language_id }}"></span> {{ text_google_characters }}</code>
 			]]></add>
 		</operation>
 		<operation error="log">
 			<search><![CDATA[<textarea name="product_description[{{ language.language_id }}][meta_description]"]]></search>
 			<add position="after"><![CDATA[
-				<code><i class="fa fa-question-circle-o" data-toggle="tooltip" data-html="true" title="{{ text_google_meta_description_alt }}"></i> {{ text_google_meta_description }} <span class="chars2"></span> {{ text_google_characters }}</code>
+				<code><i class="fa fa-question-circle-o" data-toggle="tooltip" data-html="true" title="{{ text_google_meta_description_alt }}"></i> {{ text_google_meta_description }} <span class="chars2-{{ language.language_id }}"></span> {{ text_google_characters }}</code>
 			]]></add>
 		</operation>
 		<operation error="log">
 			<search><![CDATA[<textarea name="product_description[{{ language.language_id }}][meta_keyword]"]]></search>
 			<add position="after"><![CDATA[
-			<code><i class="fa fa-question-circle-o" data-toggle="tooltip" data-html="true" title="{{ text_google_meta_keyword_alt }}"></i> {{ text_google_meta_keyword }} <span class="chars3"></span> {{ text_google_words }}</code>
+			<code><i class="fa fa-question-circle-o" data-toggle="tooltip" data-html="true" title="{{ text_google_meta_keyword_alt }}"></i> {{ text_google_meta_keyword }} <span class="chars3-{{ language.language_id }}"></span> {{ text_google_words }}</code>
 			]]></add>
 		</operation>
 		<operation error="log">
@@ -88,91 +89,37 @@ $(window).on('load', function() {
 	checkCharacters()
 });
 
-$(document).on('input', '#input-name2, #input-meta-title2, #input-meta-description2, #input-meta-keyword2', function() {
+{% for language in languages %}
+$(document).on('input', '#input-name{{ language.language_id }}, #input-meta-title{{ language.language_id }}, #input-meta-description{{ language.language_id }}, #input-meta-keyword{{ language.language_id }}', function() {
 	checkCharacters()
 });
+{% endfor %}
 
 function checkCharacters() {
-	var product_name = $('#input-name2').val().length
+	{% for language in languages %}
+	var product_name = $('#input-name{{ language.language_id }}').val().length
 	html  = product_name <= 66 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
 	html += product_name + '/66 </i>'
+	$('.chars0-{{ language.language_id }}').html(html)
 	
-	$('.chars0').html(html)
-	var meta_title = $('#input-meta-title2').val().length
+	var meta_title = $('#input-meta-title{{ language.language_id }}').val().length
 	html  = meta_title <= 60 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
 	html += meta_title + '/60 </i>'
+	$('.chars1-{{ language.language_id }}').html(html)
 	
-	$('.chars1').html(html)
-	var meta_description = $('#input-meta-description2').val().length
+	var meta_description = $('#input-meta-description{{ language.language_id }}').val().length
 	html  = meta_description <= 160 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
 	html += meta_description + '/160 </i>'
+	$('.chars2-{{ language.language_id }}').html(html)
 	
-	$('.chars2').html(html)
-	var meta_keyword = $('#input-meta-keyword2').val() != '' ? $('#input-meta-keyword2').val().split(',').length : 0
+	var meta_keyword = $('#input-meta-keyword{{ language.language_id }}').val() != '' ? $('#input-meta-keyword{{ language.language_id }}').val().split(',').length : 0
 	html  = meta_keyword <= 10 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
 	html += meta_keyword + '/10 </i>'
-	
-	$('.chars3').html(html)
+	$('.chars3-{{ language.language_id }}').html(html)
+	{% endfor %}
 }
---></script>
+//--></script>
 			]]></add>
 		</operation>
 	</file>
-	<!--//
-	<file path="admin/view/template/catalog/category_form.twig">
-		<operation error="log">
-			<search><![CDATA[<input type="text" name="category_description[{{ language.language_id }}][name]"]]></search>
-			<add position="after"><![CDATA[<code>{{ text_google_title }} <span class="chars0"></span> {{ text_google_characters }}</code>]]></add>
-		</operation>
-		<operation error="log">
-			<search><![CDATA[<input type="text" name="category_description[{{ language.language_id }}][meta_title]"]]></search>
-			<add position="after"><![CDATA[<code>{{ text_google_meta_title }} <span class="chars1"></span> {{ text_google_characters }}</code>]]></add>
-		</operation>
-		<operation error="log">
-			<search><![CDATA[<textarea name="category_description[{{ language.language_id }}][meta_description]"]]></search>
-			<add position="after"><![CDATA[<code>{{ text_google_meta_description }} <span class="chars2"></span> {{ text_google_characters }}</code>]]></add>
-		</operation>
-		<operation error="log">
-			<search><![CDATA[<textarea name="category_description[{{ language.language_id }}][meta_keyword]"]]></search>
-			<add position="after"><![CDATA[<code>{{ text_google_meta_keyword }} <span class="chars3"></span> {{ text_google_words }}</code>]]></add>
-		</operation>
-		<operation error="log">
-			<search><![CDATA[{{ footer }}]]></search>
-			<add position="before"><![CDATA[
-<script type="text/javascript">
-$(window).on('load', function() {
-	checkCharacters()
-});
-
-$(document).on('input', '#input-name2, #input-meta-title2, #input-meta-description2, #input-meta-keyword2', function() {
-	checkCharacters()
-});
-
-function checkCharacters() {
-	var product_name = $('#input-name2').val().length
-	html  = product_name <= 66 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
-	html += product_name + '/66 </i>'
-	
-	$('.chars0').html(html)
-	var meta_title = $('#input-meta-title2').val().length
-	html  = meta_title <= 60 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
-	html += meta_title + '/60 </i>'
-	
-	$('.chars1').html(html)
-	var meta_description = $('#input-meta-description2').val().length
-	html  = meta_description <= 160 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
-	html += meta_description + '/160 </i>'
-	
-	$('.chars2').html(html)
-	var meta_keyword = $('#input-meta-keyword2').val() != '' ? $('#input-meta-keyword2').val().split(',').length : 0
-	html  = meta_keyword <= 10 ? '<i class="fa fa-check-circle" style="color: #01ba30;"> ' : '<i class="fa fa-exclamation-triangle" style="color: #ca3258;"> '
-	html += meta_keyword + '/10 </i>'
-	
-	$('.chars3').html(html)
-}
-</script>
-			]]></add>
-		</operation>
-	</file>
-//-->
 </modification>
